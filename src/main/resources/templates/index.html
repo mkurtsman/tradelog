@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Reports</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<form action="/simplereport">
+    <label for="dateFrom">Date From</label>
+    <input type="date" id="dateFrom" name="dateFrom">
+    <script>
+    function startOfMonth() {
+      var today = new Date();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+      if(mm<10){
+        mm='0'+mm;
+      }
+      return  yyyy+'-'+mm+'-01';
+    }
+    document.getElementById('dateFrom').value = startOfMonth();
+    </script>
+    <br>
+    <label for="dateTo">Date To</label>
+    <input type="date" id="dateTo" name="dateTo">
+    <script>
+     function endOfMonth() {
+       var today = new Date();
+       var endday = new Date(today.getFullYear(),today.getMonth() +1, 0);
+       var d = endday.getDate();
+       var mm = endday.getMonth()+1; //January is 0!
+       var yyyy = endday.getFullYear();
+       if(d < 10){
+          d = "0"+d;
+       };
+       if(mm<10){
+         mm='0'+mm;
+       }
+
+       return  yyyy+'-'+mm+'-'+d ;
+      }
+        document.getElementById('dateTo').value = endOfMonth();
+
+    </script>
+    <br>
+    <label for="AUDUSDM5">AUDUSD - M5</label>
+    <input type="radio" id="AUDUSDM5" name="strategy" value="AUDUSDM5"/>
+    <label for="H1">H1</label>
+    <input type="radio" id="H1" name="strategy" value="H1"/>
+    <label for="All">all</label>
+    <input type="radio" id="All" name="strategy" value="ALL" checked="true"/>
+    <br>
+    <select name="account" id="account">
+        <option value="ALL" selected="selected">ALL</option>
+        <option value="INRADAY" >INRADAY</option>
+        <option value="DAILY" >DAILY</option>
+    </select>
+
+    <br>
+
+    <input type="submit"/>
+</form>
+</body>
+</html>
