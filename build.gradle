@@ -33,6 +33,19 @@ dependencies {
 	testCompileOnly 'mysql:mysql-connector-java'
 }
 
+dependencies {
+	compileOnly 'org.jsoup:jsoup:1.13.1'
+	testCompileOnly 'org.jsoup:jsoup:1.13.1'
+	testRuntimeOnly 'org.jsoup:jsoup:1.13.1'
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
 test {
 	useJUnitPlatform()
+	maxHeapSize = '1G'
 }
+

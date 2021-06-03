@@ -1,5 +1,6 @@
 package com.mk.tradelog.model;
 
+import com.mk.tradelog.model.orders.AbstractOrder;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,6 @@ public class TradesGroup implements Domain{
     private final TradeGroupingResult tradeGroupingResult;
     private final Date date;
     private final String ticker;
-    private final List<TradeResult> tradeResults;
+    private final List<AbstractOrder> abstractOrders;
 
 }
