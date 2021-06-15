@@ -38,7 +38,7 @@ public class ModelPappingFactory {
         fillCommonFields(cancelledOrder, accountString, element);
         Elements cells = element.select("td");
         BigDecimal size = new BigDecimal(cells.get(3).text());
-        cancelledOrder.setSize(size);
+        cancelledOrder.setVolume(size);
         cancelledOrder.setTicker(cells.get(4).text());
         BigDecimal openPrice = new BigDecimal(cells.get(5).text());
         cancelledOrder.setOpenPrice(openPrice);
@@ -72,7 +72,7 @@ public class ModelPappingFactory {
         fillCommonFields(order, accountString, element);
         Elements cells = element.select("td");
         BigDecimal size = new BigDecimal(cells.get(3).text());
-        order.setSize(size);
+        order.setVolume(size);
         order.setTicker(cells.get(4).text());
         BigDecimal openPrice = new BigDecimal(cells.get(5).text());
         order.setOpenPrice(openPrice);
@@ -81,7 +81,7 @@ public class ModelPappingFactory {
         BigDecimal takeProfit = new BigDecimal(cells.get(7).text());
         order.setTakeProfit(takeProfit);
         LocalDateTime closeDateTime = LocalDateTime.parse(cells.get(8).text(), formatter);
-        order.setCloseTime(closeDateTime);
+        order.setCloseDate(closeDateTime);
         BigDecimal closePrice = new BigDecimal(cells.get(9).text());
         order.setClosePrice(closePrice);
         BigDecimal commission = new BigDecimal(cells.get(10).text());

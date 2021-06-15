@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CancelledOrder extends AbstractOrder{
+public class CancelledOrder extends AbstractOrder {
 
-    private BigDecimal size;
+    private BigDecimal volume;
     private String ticker;
     private BigDecimal openPrice;
     private BigDecimal closePrice;

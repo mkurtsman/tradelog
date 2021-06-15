@@ -1,0 +1,6 @@
+application:
+  htmlParser:
+    filespath: C:/work/tradelog/src/test/resources
+server:
+  port: 8000
+

@@ -1,0 +1,43 @@
+<style>
+        #summaryTable {
+          width: 30%;
+        }
+        #detailsTable {
+          width: 50%;
+        }
+
+        table, td {
+            border: 1px solid black;
+        }
+
+        table {
+             border-collapse: collapse;
+             border: 1px solid black;
+        }
+
+        table, th {
+          border: 1px solid black;
+        }
+
+        td.summary {
+            font-weight: bold;
+            border: 1px solid black;
+        }
+
+        td.row {
+            border: 1px solid black;
+        }
+
+        td.row_light {
+            color: lightgray;
+        }
+
+        tr.summary {
+          background: lightgray;
+        }
+
+        tr.row {
+          background: white;
+        }
+
+    </style>

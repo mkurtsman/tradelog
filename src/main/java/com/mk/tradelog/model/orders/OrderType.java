@@ -2,7 +2,9 @@ package com.mk.tradelog.model.orders;
 
 import lombok.AllArgsConstructor;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 public enum OrderType {
@@ -17,11 +19,11 @@ public enum OrderType {
 
     private final String code;
 
-    public static OrderType byCode(String code){
+    public static OrderType byCode(String code) {
         return Arrays.stream(values()).filter(orderType -> orderType.code.equals(code)).findFirst().orElse(null);
     }
 
-    public static Operations getOperation(OrderType orderType){
+    public static Operations getOperation(OrderType orderType) {
         return operationsOrdersMap.entrySet().stream().filter(e -> e.getValue().contains(orderType)).map(Map.Entry::getKey).findFirst().orElse(null);
     }
 

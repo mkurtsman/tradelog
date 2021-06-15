@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Balance extends AbstractOrder{
+public class Balance extends AbstractOrder {
 
     private BigDecimal profit;
     private String comment;

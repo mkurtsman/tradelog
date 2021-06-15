@@ -1,7 +1,7 @@
 package com.mk.tradelog.service.htmlparser;
 
 import com.mk.tradelog.model.orders.AbstractOrder;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class HtmlMapper {
 
     public static final int START_ROW = 3;
 
-    public final ModelPappingFactory modelPappingFactory;
+    private final ModelPappingFactory modelPappingFactory;
 
     public List<AbstractOrder> mapDocument(Document doc) {
         List<AbstractOrder> abstractOrders = new ArrayList<>();
@@ -29,11 +29,11 @@ public class HtmlMapper {
         int row = START_ROW;
         Predicate<Element> rowsCond = el -> "Closed P/L:".equals(el.select("td").get(0).text());
 
-        while(rowsCond.negate().test(rows.get(row+2))){
+        while (rowsCond.negate().test(rows.get(row + 2))) {
             abstractOrders.add(modelPappingFactory.mapRow(rows.get(row), accountString));
             row++;
         }
-        if(row != START_ROW){
+        if (row != START_ROW) {
             abstractOrders.add(modelPappingFactory.mapRow(rows.get(row), accountString));
         }
 

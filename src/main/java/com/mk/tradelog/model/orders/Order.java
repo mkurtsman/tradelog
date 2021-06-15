@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class Order extends AbstractOrder {
 
-    private BigDecimal size;
+    private BigDecimal volume;
     private String ticker;
     private BigDecimal openPrice;
     private BigDecimal closePrice;
     private BigDecimal stopLoss;
     private BigDecimal takeProfit;
-    private LocalDateTime closeTime;
+    private LocalDateTime closeDate;
     private BigDecimal commission;
     private BigDecimal tax;
     private BigDecimal swap;

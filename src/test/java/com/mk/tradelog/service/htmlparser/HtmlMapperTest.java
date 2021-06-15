@@ -15,17 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HtmlMapperTest {
 
-    private final HtmlMapper mapper = new HtmlMapper(new ModelPappingFactory());
     private static Document doc;
+    private final HtmlMapper mapper = new HtmlMapper(new ModelPappingFactory());
 
     @BeforeAll
     public static void init() throws IOException {
-            InputStream stream = ClassLoader.getSystemResource("Statement 730044154 - Курцман Михаил.htm").openStream();
-            doc = Jsoup.parse(stream, "windows-1251", "");
+        InputStream stream = ClassLoader.getSystemResource("Statement 730044154 - Курцман Михаил.htm").openStream();
+        doc = Jsoup.parse(stream, "windows-1251", "");
     }
 
     @Test
-    public void testMapDocument(){
+    public void testMapDocument() {
         List<AbstractOrder> abstractOrders = mapper.mapDocument(doc);
         assertEquals("730044154", abstractOrders.get(0).getAccount());
     }

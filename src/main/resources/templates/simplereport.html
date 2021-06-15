@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>th:text="'Fx Account:' + ${account}</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link th:href="@{/styles/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<p th:text="'Account:' + ${account}"/>
+<p th:text="'Ticker:' + ${ticker}"/>
+<p th:text="'Date from :' + ${#temporals.format(dateFrom, 'dd-MM-yyyy HH:mm')} +' to ' + ${#temporals.format(dateTo, 'dd-MM-yyyy HH:mm')}+', '+${subPeriod}"/>
+
+<p> Summary information </p>
+<p th:text="'Profit/Loss:' + ${#numbers.formatDecimal(sumResult, 0, 2)}"/>
+<p th:text="'Averag Profit/Loss:' + ${#numbers.formatDecimal(avgResult, 0, 2)}"/>
+<p th:text="'Profits: ' + ${profits}"/>
+<p th:text="'Losses: ' + ${losses}"/>
+
+<p th:text="'Average trades count: ' + ${#numbers.formatDecimal(avgCount, 0, 2)}"/>
+<p th:text="'Average profit trades count: ' + ${#numbers.formatDecimal(profitAvgCount, 0, 2)}"/>
+<p th:text="'Average loss trades count: ' + ${#numbers.formatDecimal(lossAvgCount, 0, 2)}"/>
+<p th:text="'Profit/Loss coeff: ' + ${#numbers.formatDecimal(plCoef, 0, 2)}"/>
+
+<table id="summaryTable">
+    <thead>
+    <tr>
+        <th th:each="header : ${summaryHeaders}" th:text="${header}"/>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="row : ${reportData}" th:class="${row}">
+        <td th:if="${row.summary}" th:text="${row.date}" class="row">date</td>
+        <td th:if="${row.summary}" th:text="${row.result}" class="row">result</td>
+        <td th:if="${row.summary}" th:text="${row.profitCount}" class="row">profitSum</td>
+        <td th:if="${row.summary}" th:text="${row.lossCount}" class="row">lossSum</td>
+        <td th:if="${row.summary}" th:text="${row.profitCount + row.lossCount}" class="row">lossSum</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+<table id="detailsTable">
+    <thead>
+    <tr>
+        <th th:each="header : ${reportHeaders}" th:text="${header}"/>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="row : ${reportData}" th:class="${row.summary} ? summary : row">
+        <td th:if="${row.summary}" th:text="${row.date}" class="summary">date</td>
+        <td th:if="${!row.summary}" class="row"></td>
+
+        <td th:if="${row.summary}" th:text="${row.profitSum}" class="summary">netto</td>
+        <td th:if="${!row.summary}" th:text="${row.profit}" class="row">netto</td>
+
+        <td th:if="${row.summary}" th:text="${row.commissionSum}" class="summary">commissionSum</td>
+        <td th:if="${!row.summary}" th:text="${row.commission}" class="row">commission</td>
+
+        <td th:if="${row.summary}" th:text="${row.result}" class="summary">result</td>
+        <td th:if="${!row.summary}" class="row row_light" th:text="${row.result}">result</td>
+
+        <td th:if="${row.summary}" th:text="${row.profitCount}" class="summary">profitSum</td>
+        <td th:if="${!row.summary}" class="row row_light" th:text="${row.volume}"></td>
+
+        <td th:if="${row.summary}" th:text="${row.lossCount}" class="summary">lossSum</td>
+        <td th:if="${!row.summary}" th:text="${row.points}" class="row row_light"></td>
+
+        <td th:if="${row.summary}" class="summary" />
+        <td th:if="${!row.summary}" th:text="${row.ticker}" class="row"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
