@@ -17,7 +17,7 @@ public class HtmlMapper {
 
     public static final int START_ROW = 3;
 
-    private final ModelPappingFactory modelPappingFactory;
+    private final ModelMappingFactory modelPappingFactory;
 
     public List<AbstractOrder> mapDocument(Document doc) {
         List<AbstractOrder> abstractOrders = new ArrayList<>();

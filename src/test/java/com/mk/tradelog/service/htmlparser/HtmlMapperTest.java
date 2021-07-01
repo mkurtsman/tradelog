@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class HtmlMapperTest {
 
     private static Document doc;
-    private final HtmlMapper mapper = new HtmlMapper(new ModelPappingFactory());
+    private final HtmlMapper mapper = new HtmlMapper(new ModelMappingFactory());
 
     @BeforeAll
     public static void init() throws IOException {
-        InputStream stream = ClassLoader.getSystemResource("Statement 730044154 - Курцман Михаил.htm").openStream();
+        InputStream stream = ClassLoader.getSystemResource("DetailedStatement.htm").openStream();
         doc = Jsoup.parse(stream, "windows-1251", "");
     }
 

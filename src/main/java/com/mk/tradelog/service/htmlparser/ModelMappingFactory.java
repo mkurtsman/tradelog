@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class ModelPappingFactory {
+public class ModelMappingFactory {
 
     //2021.06.01 11:18:35
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:s");
@@ -39,7 +39,7 @@ public class ModelPappingFactory {
         Elements cells = element.select("td");
         BigDecimal size = new BigDecimal(cells.get(3).text());
         cancelledOrder.setVolume(size);
-        cancelledOrder.setTicker(cells.get(4).text());
+        cancelledOrder.setTicker(cells.get(4).text().toLowerCase());
         BigDecimal openPrice = new BigDecimal(cells.get(5).text());
         cancelledOrder.setOpenPrice(openPrice);
         BigDecimal stopLoss = new BigDecimal(cells.get(6).text());
@@ -73,7 +73,7 @@ public class ModelPappingFactory {
         Elements cells = element.select("td");
         BigDecimal size = new BigDecimal(cells.get(3).text());
         order.setVolume(size);
-        order.setTicker(cells.get(4).text());
+        order.setTicker(cells.get(4).text().toLowerCase());
         BigDecimal openPrice = new BigDecimal(cells.get(5).text());
         order.setOpenPrice(openPrice);
         BigDecimal stopLoss = new BigDecimal(cells.get(6).text());

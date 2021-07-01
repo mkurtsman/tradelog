@@ -1,19 +1,19 @@
 package com.mk.tradelog.model.reports.simplereport;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 public class SimpleReportSubPeriodSums implements SimpleReportRow{
-    private Long date;
+    private LocalDate date;
     private Integer profitCount = 0;
     private Integer lossCount = 0;
     private BigDecimal profitSum = BigDecimal.valueOf(0.0);
     private BigDecimal commissionSum = new BigDecimal(0.0);
 
-    public SimpleReportSubPeriodSums(Long date){
+    public SimpleReportSubPeriodSums(LocalDate date){
         this.date = date;
     }
 
@@ -23,7 +23,7 @@ public class SimpleReportSubPeriodSums implements SimpleReportRow{
     }
 
     public BigDecimal getResult(){
-        return profitSum.subtract(commissionSum);
+        return profitSum.subtract(commissionSum.abs());
     }
 
     public void add(SimpleReport row){

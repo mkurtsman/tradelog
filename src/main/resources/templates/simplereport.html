@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>th:text="'Fx Account:' + ${account}</title>
+    <title th:text="'Fx_Report'">pageTitle</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <link th:href="@{/styles/style.css}" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
 
 <p> Summary information </p>
 <p th:text="'Profit/Loss:' + ${#numbers.formatDecimal(sumResult, 0, 2)}"/>
-<p th:text="'Averag Profit/Loss:' + ${#numbers.formatDecimal(avgResult, 0, 2)}"/>
+<p th:text="'Average Profit/Loss:' + ${#numbers.formatDecimal(avgResult, 0, 2)}"/>
 <p th:text="'Profits: ' + ${profits}"/>
 <p th:text="'Losses: ' + ${losses}"/>
 

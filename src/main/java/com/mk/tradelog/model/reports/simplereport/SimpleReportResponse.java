@@ -3,6 +3,7 @@ package com.mk.tradelog.model.reports.simplereport;
 import com.mk.tradelog.model.orders.Order;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.List;
@@ -16,6 +17,6 @@ public class SimpleReportResponse {
     private LocalDateTime dateFrom;
     private LocalDateTime dateTo;
     private ChronoField subPeriod;
-    private Map<Long, List<Order>> subPeriodValues;
+    private Map<LocalDate, List<Order>> subPeriodValues;
 
 }

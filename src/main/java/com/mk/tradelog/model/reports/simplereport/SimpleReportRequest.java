@@ -11,7 +11,7 @@ public class SimpleReportRequest {
     private LocalDateTime dateTo;
     private String account;
     private String ticker;
-    private ChronoField subPeriod;
-    private boolean includeTicker = true;
+    private Integer ignoreTicker;
+    private Integer equals;
 
 }

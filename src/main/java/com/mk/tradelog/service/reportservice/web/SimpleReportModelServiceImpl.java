@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 @Component
 public class SimpleReportModelServiceImpl implements SimpleReportModelService {
@@ -31,7 +29,8 @@ public class SimpleReportModelServiceImpl implements SimpleReportModelService {
         attributes.put("summaryHeaders", new String[]{"date", "result", "profit, count", "loss, count", "count"});
 
         List<SimpleReportSubPeriodSums> sumRows = new LinkedList<>();
-        for( Map.Entry<Long, List< Order>> entry : data.getSubPeriodValues().entrySet()){
+        TreeMap<LocalDate, List< Order>> sorted = new TreeMap(data.getSubPeriodValues());
+        for( Map.Entry<LocalDate, List< Order>> entry : sorted.entrySet()){
             SimpleReportSubPeriodSums sum = new SimpleReportSubPeriodSums(entry.getKey());
             sumRows.add(sum);
             rows.add(sum);

@@ -1,20 +1,21 @@
 package com.mk.tradelog.web;
 
 import com.mk.tradelog.model.reports.simplereport.SimpleReportRequest;
+import com.mk.tradelog.model.web.Account;
+import com.mk.tradelog.model.web.Strategy;
 import com.mk.tradelog.service.reportsdataservice.SimpleReportDataService;
 import com.mk.tradelog.service.reportservice.web.SimpleReportModelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoField;
-
-import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,27 +25,36 @@ public class ReportsController {
     private final SimpleReportModelService modelService;
 
     @GetMapping("/simplereport")
-    public String simpleReport(Model model) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        fillModel(model, true);
-        return "simplereport";
-    }
-
-    @GetMapping("/simplereportother")
-    public String simpleReportOther(Model model) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        fillModel(model, false);
-        return "simplereport";
-    }
-
-    private void fillModel(Model model, boolean includeTicker) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public String simpleReport(Model model,
+                               @RequestParam
+                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                       LocalDate dateFrom,
+                               @RequestParam
+                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                       LocalDate dateTo,
+                               @RequestParam
+                                        Strategy strategy,
+                               @RequestParam
+                                       Account account) {
         SimpleReportRequest request = new SimpleReportRequest();
-        request.setAccount("730044154");
-        LocalDateTime now = LocalDateTime.now();
-        request.setDateFrom(now.with(firstDayOfMonth()).with(ChronoField.NANO_OF_DAY, LocalTime.MIN.toNanoOfDay()));
-        request.setDateTo(now.with(lastDayOfMonth()).with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
-        request.setTicker("AUDUSD");
-        request.setIncludeTicker(includeTicker);
-        request.setSubPeriod(ChronoField.DAY_OF_MONTH);
+        request.setAccount(account == null ? null : account.getValue());
+        request.setDateFrom(dateFrom.atStartOfDay());
+        request.setDateTo(dateTo.atStartOfDay().with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
+        if( strategy == Strategy.ALL) {
+            request.setIgnoreTicker(1);
+        } else if (strategy == Strategy.H1) {
+            request.setIgnoreTicker(0);
+            request.setEquals(0);
+            request.setTicker("audusd");
+        } else if(strategy == Strategy.AUDUSDM5){
+            request.setIgnoreTicker(0);
+            request.setEquals(1);
+            request.setTicker("audusd");
+        } else {
+            throw new RuntimeException("incorrect strategy type");
+        }
         model.addAllAttributes(modelService.getReportModel(dataService.createReportModel(request)));
+        return "simplereport";
     }
 
 }
