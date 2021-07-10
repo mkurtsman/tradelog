@@ -6,6 +6,7 @@ import com.mk.tradelog.model.reports.simplereport.SimpleReportResponse;
 import com.mk.tradelog.repsitory.MarketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +24,7 @@ public class SimpleReportDataServiceImpl implements SimpleReportDataService {
     private final MarketRepository repository;
 
     @Override
+    @Transactional
     public SimpleReportResponse createReportModel(SimpleReportRequest reportRequest) {
 
         Iterable<Order> orders = repository.findByParams(reportRequest.getAccount(),

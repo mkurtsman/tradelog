@@ -1,4 +1,4 @@
-package com.mk.tradelog.model.web;
+package com.mk.tradelog.model.reports.simplereport;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

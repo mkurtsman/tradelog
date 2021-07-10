@@ -1,9 +1,4 @@
-application:
-  htmlParser:
-    filespath: /home/misha/IdeaProjects/tradelog/src/test/resources
 spring:
-  datasource:
-    url: jdbc:h2:file:/home/misha/tradelog/data/db
   jpa:
     show_sql: true
     format_sql: true

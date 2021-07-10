@@ -1,6 +1,5 @@
 package com.mk.tradelog.model.orders;
 
-import com.mk.tradelog.model.Domain;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Table(name = "AORDER")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-public abstract class AbstractOrder implements Domain {
+public abstract class AbstractOrder {
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;

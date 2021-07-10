@@ -1,10 +1,14 @@
 application:
   htmlParser:
-    filespath: C:\work\tradelog\src\test\resources
+    filespath: data/
 server:
   port: 8000
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
   jpa:
     properties:
       javax:
@@ -13,18 +17,10 @@ spring:
             create-source: metadata
             scripts:
               action: create
-              create-target: data/create.sql
+              create-target: data/db/create.sql
 
   datasource:
-    url: jdbc:h2:file:C:/work/tradelog/data/db
-    driverClassName: org.h2.Driver
-    username: admin
-    password: admin
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: false
-        web-allow-others: false
+    url: jdbc:mysql://172.17.0.2:3306/mydb
+    username: mysql
+    password: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect

@@ -1,23 +1,35 @@
 package com.mk.tradelog.service.reportservice.web;
 
 import com.mk.tradelog.model.orders.Order;
-import com.mk.tradelog.model.reports.simplereport.SimpleReport;
-import com.mk.tradelog.model.reports.simplereport.SimpleReportResponse;
-import com.mk.tradelog.model.reports.simplereport.SimpleReportRow;
-import com.mk.tradelog.model.reports.simplereport.SimpleReportSubPeriodSums;
+import com.mk.tradelog.model.reports.simplereport.*;
+import com.mk.tradelog.model.reports.simplereport.Account;
+import com.mk.tradelog.model.reports.simplereport.Strategy;
+import com.mk.tradelog.service.reportsdataservice.SimpleReportDataService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.*;
 
 @Component
+@RequiredArgsConstructor
 public class SimpleReportModelServiceImpl implements SimpleReportModelService {
+
+    private final SimpleReportDataService dataService;
 
 
     @Override
-    public Map<String, Object> getReportModel(SimpleReportResponse data) {
+    public Map<String, Object> getReportModel(LocalDate dateFrom, LocalDate dateTo, Strategy strategy, Account account) {
+        SimpleReportRequest request = getSimpleReportRequest(dateFrom, dateTo, strategy, account);
+        SimpleReportResponse respose = dataService.createReportModel(request);
+        return getReportModel(respose);
+    }
+
+    private Map<String, Object> getReportModel(SimpleReportResponse data) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("account", data.getAccount());
         attributes.put("ticker", data.getTicker());
@@ -73,5 +85,26 @@ public class SimpleReportModelServiceImpl implements SimpleReportModelService {
         reportRow.setOtherFee(order.getSwap());
         reportRow.setTicker(order.getTicker());
         return reportRow;
+    }
+
+    private SimpleReportRequest getSimpleReportRequest(LocalDate dateFrom, LocalDate dateTo, Strategy strategy, Account account) {
+        SimpleReportRequest request = new SimpleReportRequest();
+        request.setAccount(account == null ? null : account.getValue());
+        request.setDateFrom(dateFrom.atStartOfDay());
+        request.setDateTo(dateTo.atStartOfDay().with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
+        if( strategy == Strategy.ALL) {
+            request.setIgnoreTicker(1);
+        } else if (strategy == Strategy.H1) {
+            request.setIgnoreTicker(0);
+            request.setEquals(0);
+            request.setTicker("audusd");
+        } else if(strategy == Strategy.AUDUSDM5){
+            request.setIgnoreTicker(0);
+            request.setEquals(1);
+            request.setTicker("audusd");
+        } else {
+            throw new RuntimeException("incorrect strategy type");
+        }
+        return request;
     }
 }
