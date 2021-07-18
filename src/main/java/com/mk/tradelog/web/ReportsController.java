@@ -1,28 +1,32 @@
 package com.mk.tradelog.web;
 
-import com.mk.tradelog.model.reports.simplereport.SimpleReportRequest;
-import com.mk.tradelog.model.web.Account;
-import com.mk.tradelog.model.web.Strategy;
-import com.mk.tradelog.service.reportsdataservice.SimpleReportDataService;
+import com.mk.tradelog.model.reports.simplereport.Account;
+import com.mk.tradelog.model.reports.simplereport.Strategy;
+import com.mk.tradelog.service.event.UpdateDataService;
+import com.mk.tradelog.service.files.FileService;
 import com.mk.tradelog.service.reportservice.web.SimpleReportModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoField;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class ReportsController {
 
-    private final SimpleReportDataService dataService;
     private final SimpleReportModelService modelService;
+    private final FileService fileService;
+    private final UpdateDataService updateDataService;
+
 
     @GetMapping("/simplereport")
     public String simpleReport(Model model,
@@ -36,25 +40,29 @@ public class ReportsController {
                                         Strategy strategy,
                                @RequestParam
                                        Account account) {
-        SimpleReportRequest request = new SimpleReportRequest();
-        request.setAccount(account == null ? null : account.getValue());
-        request.setDateFrom(dateFrom.atStartOfDay());
-        request.setDateTo(dateTo.atStartOfDay().with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
-        if( strategy == Strategy.ALL) {
-            request.setIgnoreTicker(1);
-        } else if (strategy == Strategy.H1) {
-            request.setIgnoreTicker(0);
-            request.setEquals(0);
-            request.setTicker("audusd");
-        } else if(strategy == Strategy.AUDUSDM5){
-            request.setIgnoreTicker(0);
-            request.setEquals(1);
-            request.setTicker("audusd");
-        } else {
-            throw new RuntimeException("incorrect strategy type");
-        }
-        model.addAllAttributes(modelService.getReportModel(dataService.createReportModel(request)));
+
+        Map<String, Object> modelAttributes = modelService.getReportModel(dateFrom, dateTo, strategy, account);
+        model.addAllAttributes(modelAttributes);
         return "simplereport";
     }
+
+    @PostMapping("/uploadFile")
+    public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)  {
+
+        try {
+            fileService.writeFile(file.getOriginalFilename(), file.getBytes());
+            updateDataService.update();
+            redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("message", "Uploaded  failed" + file.getOriginalFilename() + "!");
+            e.printStackTrace();
+        }
+
+
+        return "redirect:/";
+
+    }
+
+
 
 }
