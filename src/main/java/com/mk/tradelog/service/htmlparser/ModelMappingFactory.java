@@ -37,18 +37,18 @@ public class ModelMappingFactory {
         CancelledOrder cancelledOrder = new CancelledOrder();
         fillCommonFields(cancelledOrder, accountString, element);
         Elements cells = element.select("td");
-        BigDecimal size = new BigDecimal(cells.get(3).text());
+        BigDecimal size = parceBigDecimal(cells, 3);
         cancelledOrder.setVolume(size);
         cancelledOrder.setTicker(cells.get(4).text().toLowerCase());
-        BigDecimal openPrice = new BigDecimal(cells.get(5).text());
+        BigDecimal openPrice = parceBigDecimal(cells, 5);
         cancelledOrder.setOpenPrice(openPrice);
-        BigDecimal stopLoss = new BigDecimal(cells.get(6).text());
+        BigDecimal stopLoss = parceBigDecimal(cells, 6);
         cancelledOrder.setStopLoss(stopLoss);
-        BigDecimal takeProfit = new BigDecimal(cells.get(7).text());
+        BigDecimal takeProfit = parceBigDecimal(cells, 7);
         cancelledOrder.setTakeProfit(takeProfit);
         LocalDateTime closeDateTime = LocalDateTime.parse(cells.get(8).text(), formatter);
         cancelledOrder.setCloseTime(closeDateTime);
-        BigDecimal closePrice = new BigDecimal(cells.get(9).text());
+        BigDecimal closePrice = parceBigDecimal(cells, 9);
         cancelledOrder.setClosePrice(closePrice);
         String comment = cells.get(10).text();
         cancelledOrder.setComment(comment);
@@ -60,7 +60,7 @@ public class ModelMappingFactory {
         Balance balance = new Balance();
         fillCommonFields(balance, accountString, element);
         Elements cells = element.select("td");
-        BigDecimal profit = new BigDecimal(cells.get(4).text());
+        BigDecimal profit = parceBigDecimal(cells, 4);
         balance.setProfit(profit);
         String comment = cells.get(3).text();
         balance.setComment(comment);
@@ -71,26 +71,26 @@ public class ModelMappingFactory {
         Order order = new Order();
         fillCommonFields(order, accountString, element);
         Elements cells = element.select("td");
-        BigDecimal size = new BigDecimal(cells.get(3).text());
+        BigDecimal size = parceBigDecimal(cells, 3);
         order.setVolume(size);
         order.setTicker(cells.get(4).text().toLowerCase());
-        BigDecimal openPrice = new BigDecimal(cells.get(5).text());
+        BigDecimal openPrice = parceBigDecimal(cells, 5);
         order.setOpenPrice(openPrice);
-        BigDecimal stopLoss = new BigDecimal(cells.get(6).text());
+        BigDecimal stopLoss = parceBigDecimal(cells, 6);
         order.setStopLoss(stopLoss);
-        BigDecimal takeProfit = new BigDecimal(cells.get(7).text());
+        BigDecimal takeProfit = parceBigDecimal(cells, 7);
         order.setTakeProfit(takeProfit);
         LocalDateTime closeDateTime = LocalDateTime.parse(cells.get(8).text(), formatter);
         order.setCloseDate(closeDateTime);
-        BigDecimal closePrice = new BigDecimal(cells.get(9).text());
+        BigDecimal closePrice = parceBigDecimal(cells, 9);
         order.setClosePrice(closePrice);
-        BigDecimal commission = new BigDecimal(cells.get(10).text());
+        BigDecimal commission = parceBigDecimal(cells, 10);
         order.setCommission(commission);
-        BigDecimal tax = new BigDecimal(cells.get(11).text());
+        BigDecimal tax = parceBigDecimal(cells, 11);
         order.setTax(tax);
-        BigDecimal swap = new BigDecimal(cells.get(12).text());
+        BigDecimal swap = parceBigDecimal(cells, 12);
         order.setSwap(swap);
-        BigDecimal profit = new BigDecimal(cells.get(13).text());
+        BigDecimal profit = parceBigDecimal(cells, 13);
         order.setProfit(profit);
 
         return order;
@@ -107,6 +107,12 @@ public class ModelMappingFactory {
         model.setOpenDate(openDate);
         model.setType(orderType);
 
+    }
+
+    private BigDecimal parceBigDecimal(Elements cells, Integer idx) {
+        var text = cells.get(idx).text();
+        System.out.println(text);
+        return text == null ? null : new BigDecimal(text.replaceAll("\\s", ""));
     }
 
 
