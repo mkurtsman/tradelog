@@ -1,9 +1,9 @@
 package com.mk.tradelog.service.reportservice.web;
 
-import com.mk.tradelog.model.orders.Order;
+import com.mk.tradelog.model.common.Strategy;
+import com.mk.tradelog.model.db.orders.Order;
 import com.mk.tradelog.model.reports.simplereport.*;
 import com.mk.tradelog.model.reports.simplereport.Account;
-import com.mk.tradelog.model.reports.simplereport.Strategy;
 import com.mk.tradelog.service.reportsdataservice.SimpleReportDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -84,6 +84,7 @@ public class SimpleReportModelServiceImpl implements SimpleReportModelService {
         reportRow.setVolume(order.getVolume());
         reportRow.setOtherFee(order.getSwap());
         reportRow.setTicker(order.getTicker());
+        reportRow.setId(order.getId());
         return reportRow;
     }
 
@@ -92,18 +93,8 @@ public class SimpleReportModelServiceImpl implements SimpleReportModelService {
         request.setAccount(account == null ? null : account.getValue());
         request.setDateFrom(dateFrom.atStartOfDay());
         request.setDateTo(dateTo.atStartOfDay().with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
-        if( strategy == Strategy.ALL) {
-            request.setIgnoreTicker(1);
-        } else if (strategy == Strategy.H1) {
-            request.setIgnoreTicker(0);
-            request.setEquals(0);
-            request.setTicker("audusd");
-        } else if(strategy == Strategy.AUDUSDM5){
-            request.setIgnoreTicker(0);
-            request.setEquals(1);
-            request.setTicker("audusd");
-        } else {
-            throw new RuntimeException("incorrect strategy type");
+        if(strategy != Strategy.ALL) {
+            request.setStrategy(strategy);
         }
         return request;
     }

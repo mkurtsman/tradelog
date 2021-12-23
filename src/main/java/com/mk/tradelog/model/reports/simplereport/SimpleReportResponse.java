@@ -1,6 +1,6 @@
 package com.mk.tradelog.model.reports.simplereport;
 
-import com.mk.tradelog.model.orders.Order;
+import com.mk.tradelog.model.db.orders.Order;
 import lombok.Data;
 
 import java.time.LocalDate;

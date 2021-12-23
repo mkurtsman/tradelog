@@ -1,6 +1,6 @@
 package com.mk.tradelog.service.htmlparser;
 
-import com.mk.tradelog.model.orders.AbstractOrder;
+import com.mk.tradelog.model.db.orders.AbstractOrder;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

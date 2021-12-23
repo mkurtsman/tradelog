@@ -1,7 +1,7 @@
 package com.mk.tradelog.web;
 
+import com.mk.tradelog.model.common.Strategy;
 import com.mk.tradelog.model.reports.simplereport.Account;
-import com.mk.tradelog.model.reports.simplereport.Strategy;
 import com.mk.tradelog.service.event.UpdateDataService;
 import com.mk.tradelog.service.files.FileService;
 import com.mk.tradelog.service.reportservice.web.SimpleReportModelService;
@@ -37,7 +37,7 @@ public class ReportsController {
                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                        LocalDate dateTo,
                                @RequestParam
-                                        Strategy strategy,
+                                           Strategy strategy,
                                @RequestParam
                                        Account account) {
 

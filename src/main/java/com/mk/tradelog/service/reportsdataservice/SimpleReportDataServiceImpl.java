@@ -1,6 +1,6 @@
 package com.mk.tradelog.service.reportsdataservice;
 
-import com.mk.tradelog.model.orders.Order;
+import com.mk.tradelog.model.db.orders.Order;
 import com.mk.tradelog.model.reports.simplereport.SimpleReportRequest;
 import com.mk.tradelog.model.reports.simplereport.SimpleReportResponse;
 import com.mk.tradelog.repsitory.MarketRepository;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -30,9 +29,8 @@ public class SimpleReportDataServiceImpl implements SimpleReportDataService {
         Iterable<Order> orders = repository.findByParams(reportRequest.getAccount(),
                 reportRequest.getDateFrom(),
                 reportRequest.getDateTo(),
-                reportRequest.getIgnoreTicker(),
-                reportRequest.getEquals(),
-                reportRequest.getTicker());
+                reportRequest.getTicker(),
+                reportRequest.getStrategy());
         Stream<Order> orderStream = StreamSupport.stream(orders.spliterator(), false);
         Map<LocalDate, List<Order>> map = orderStream.collect(Collectors.groupingBy(order -> order.getCloseDate().toLocalDate(), Collectors.toList()));
 

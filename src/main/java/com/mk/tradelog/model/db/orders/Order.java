@@ -1,11 +1,11 @@
-package com.mk.tradelog.model.orders;
+package com.mk.tradelog.model.db.orders;
 
+import com.mk.tradelog.model.db.info.OrderInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,5 +27,10 @@ public class Order extends AbstractOrder {
     private BigDecimal tax;
     private BigDecimal swap;
     private BigDecimal profit;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "infoid", referencedColumnName = "id")
+    private OrderInfo info;
+
 
 }

@@ -1,7 +1,7 @@
 package com.mk.tradelog.service.reportservice.web;
 
+import com.mk.tradelog.model.common.Strategy;
 import com.mk.tradelog.model.reports.simplereport.Account;
-import com.mk.tradelog.model.reports.simplereport.Strategy;
 
 import java.time.LocalDate;
 import java.util.Map;

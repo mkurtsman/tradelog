@@ -1,6 +1,6 @@
 package com.mk.tradelog.repsitory;
 
-import com.mk.tradelog.model.orders.AbstractOrder;
+import com.mk.tradelog.model.db.orders.AbstractOrder;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

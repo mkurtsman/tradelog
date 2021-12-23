@@ -1,6 +1,6 @@
 package com.mk.tradelog.service.event;
 
-import com.mk.tradelog.model.orders.AbstractOrder;
+import com.mk.tradelog.model.db.orders.AbstractOrder;
 import com.mk.tradelog.repsitory.OrdersRepository;
 import com.mk.tradelog.service.files.FileService;
 import com.mk.tradelog.service.htmlparser.HtmlParser;

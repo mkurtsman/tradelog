@@ -1,4 +1,4 @@
-package com.mk.tradelog.model.orders;
+package com.mk.tradelog.model.db.orders;
 
 import lombok.AllArgsConstructor;
 

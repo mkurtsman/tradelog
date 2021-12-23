@@ -50,7 +50,7 @@
     <tbody>
     <tr th:each="row : ${reportData}" th:class="${row.summary} ? summary : row">
         <td th:if="${row.summary}" th:text="${row.date}" class="summary">date</td>
-        <td th:if="${!row.summary}" class="row"></td>
+        <td th:if="${!row.summary}" class="row" th:text="${row.id}">id</td>
 
         <td th:if="${row.summary}" th:text="${row.profitSum}" class="summary">netto</td>
         <td th:if="${!row.summary}" th:text="${row.profit}" class="row">netto</td>

@@ -1,6 +1,7 @@
-package com.mk.tradelog.model.orders;
+package com.mk.tradelog.model.db.orders;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,5 +16,6 @@ public abstract class AbstractOrder {
     private Long id;
     private String account;
     private LocalDateTime openDate;
+    @Enumerated(EnumType.STRING)
     private OrderType type;
 }

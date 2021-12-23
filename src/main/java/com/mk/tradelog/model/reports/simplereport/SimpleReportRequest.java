@@ -1,5 +1,6 @@
 package com.mk.tradelog.model.reports.simplereport;
 
+import com.mk.tradelog.model.common.Strategy;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,6 @@ public class SimpleReportRequest {
     private LocalDateTime dateTo;
     private String account;
     private String ticker;
-    private Integer ignoreTicker;
-    private Integer equals;
+    private Strategy strategy;
 
 }

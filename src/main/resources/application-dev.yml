@@ -13,7 +13,7 @@ spring:
             create-source: metadata
             scripts:
               action: create
-              create-target: /home/misha/tradelog/data/create.sql
+              create-target: data/create.sql
 logging:
   level:
     org:

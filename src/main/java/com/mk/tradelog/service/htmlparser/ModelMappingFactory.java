@@ -1,6 +1,9 @@
 package com.mk.tradelog.service.htmlparser;
 
-import com.mk.tradelog.model.orders.*;
+import com.mk.tradelog.model.common.Account;
+import com.mk.tradelog.model.common.Strategy;
+import com.mk.tradelog.model.db.info.OrderInfo;
+import com.mk.tradelog.model.db.orders.*;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
@@ -93,6 +96,22 @@ public class ModelMappingFactory {
         BigDecimal profit = parceBigDecimal(cells, 13);
         order.setProfit(profit);
 
+        OrderInfo info = new OrderInfo();
+        order.setInfo(info);
+
+        if(Account.DAILY.getValue().equals(accountString)){
+            info.setStrategy(Strategy.D1);
+        } else if(Account.INRADAY.getValue().equals(accountString)){
+            if(order.getVolume().doubleValue() <= 0.02) {
+                info.setStrategy(Strategy.M5);
+            } else {
+                info.setStrategy(Strategy.SCALPING);
+            }
+        } else {
+            info.setStrategy(Strategy.CUSTOM);
+        }
+
+
         return order;
     }
 
@@ -106,7 +125,6 @@ public class ModelMappingFactory {
         model.setId(id);
         model.setOpenDate(openDate);
         model.setType(orderType);
-
     }
 
     private BigDecimal parceBigDecimal(Elements cells, Integer idx) {
