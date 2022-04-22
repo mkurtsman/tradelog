@@ -38,3 +38,4 @@ out/
 /data/create.sql
 /data/db.mv.db
 /data/db.trace.db
+/target/
